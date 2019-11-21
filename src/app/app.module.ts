@@ -4,7 +4,7 @@ import { AuthService } from './../auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {  MatDialogModule } from '@angular/material/dialog';
 import { AppRoutingModule } from './app-routing.module';
 import {MatTableModule} from '@angular/material/table';
@@ -27,7 +27,6 @@ import { SuccessfulRegisterComponent } from './successful-register/successful-re
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import { ModalNotRegisteredComponent } from './modal-not-registered/modal-not-registered.component';
 import { ErrorViewComponent } from './log-view/log-view.component';
-import { LogListingComponent } from './log-listing/log-listing.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule, MatCardModule } from '@angular/material';
 
@@ -43,8 +42,7 @@ import { MatIconModule, MatCardModule } from '@angular/material';
     SuccessfulRegisterComponent,
     AccessDeniedComponent,
     ModalNotRegisteredComponent,
-    ErrorViewComponent,
-    LogListingComponent
+    ErrorViewComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +60,8 @@ import { MatIconModule, MatCardModule } from '@angular/material';
     HttpClientModule,
     MatSnackBarModule,
     MatIconModule,
-    MatCardModule    
+    MatCardModule,
+    FormsModule
   ],
   providers: [AuthGuard, AuthService],
   entryComponents: [ModalNotRegisteredComponent,SuccessfulRegisterComponent],

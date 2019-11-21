@@ -35,6 +35,7 @@ export class ContentComponent implements OnInit {
   selectedEnvironment = 'producao';
   selectedSearchBy;
   selectedOrderBy;
+  searchBy = "";
 
   // ----- Tabela -----
   displayedColumns: string[] = [/*'select',*/ 'id', 'level', 'log', 'evento', 'visualize', 'archive', 'delete'];
@@ -49,16 +50,17 @@ export class ContentComponent implements OnInit {
   archived = ARCHIVED;
 
 
-  constructor(private router: Router, private logService: LogService) {}
+  constructor(private router: Router, private logService: LogService) {
+  }
 
   ngOnInit() {
     this.search();
   }
 
   search(){
-    if(this.selectedOrderBy != null && this.selectedSearchBy != null){
+    if(this.selectedOrderBy != null && this.searchBy != null){
       if(this.selectedOrderBy == 'evento'){
-        this.logService.findLogByEnvironmentAndSearchByAndOrderByEvent(this.selectedEnvironment, this.selectedSearchBy)
+        this.logService.findLogByEnvironmentAndSearchByAndOrderByEvent(this.selectedEnvironment, this.searchBy)
         .subscribe(
           response=>{
             let res = response;
@@ -68,7 +70,7 @@ export class ContentComponent implements OnInit {
         return;
       }
       if(this.selectedOrderBy == 'level'){
-        this.logService.findLogByEnvironmentAndSearchByAndOrderByLevel(this.selectedEnvironment, this.selectedSearchBy)
+        this.logService.findLogByEnvironmentAndSearchByAndOrderByLevel(this.selectedEnvironment, this.searchBy)
         .subscribe(
           response=>{
             let res = response;
@@ -79,8 +81,8 @@ export class ContentComponent implements OnInit {
       }
     }
 
-    if(this.selectedOrderBy == null && this.selectedSearchBy != null){
-        this.logService.findLogByEnvironmentAndSearchBy(this.selectedEnvironment, this.selectedSearchBy)
+    if(this.selectedOrderBy == null && this.searchBy != null){
+        this.logService.findLogByEnvironmentAndSearchBy(this.selectedEnvironment, this.searchBy)
         .subscribe(
           response=>{
             let res = response;
@@ -90,7 +92,7 @@ export class ContentComponent implements OnInit {
         return;
     }
 
-    if(this.selectedOrderBy != null && this.selectedSearchBy == null){
+    if(this.selectedOrderBy != null && this.searchBy == null){
       if(this.selectedOrderBy == 'evento'){
         this.logService.findLogByEnvironmentAndOrderByEvent(this.selectedEnvironment, this.selectedOrderBy)
         .subscribe(
@@ -101,7 +103,7 @@ export class ContentComponent implements OnInit {
         );
         return;
       }
-    
+
       if(this.selectedOrderBy == 'level'){
         this.logService.findLogByEnvironmentAndOrderByLevel(this.selectedEnvironment, this.selectedOrderBy)
         .subscribe(
@@ -164,10 +166,6 @@ export class ContentComponent implements OnInit {
 
   }
 
-  gotoCadastroClientes() {
-    this.router.navigate(['/signup']);
-  }
-
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -198,4 +196,6 @@ export class ContentComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 }
+
+  
 

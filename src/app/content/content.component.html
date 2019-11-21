@@ -1,14 +1,6 @@
 <app-header></app-header>
 
 <div class="container wrapper-content">
-  <!--<button class="btn btn-home-cadastro-clientes" (click)="gotoCadastroClientes()">Crie sua conta</button>-->
-
-  <!-- <div class="box-tile">
-    <h1><b class="tag">#</b>Traning banking juros amigo</h1>
-    <button class="btn btn-home-cadastro-clientes" (click)="gotoCadastroClientes()">Crie sua conta</button>
-  </div>
-  <div class="bg_img"></div>
-  -->
 
   <!-- Dropdowns de select-->
   <div class="row">
@@ -45,42 +37,24 @@
         </mat-select>
       </mat-form-field>
     </div>
-
-<div class="col-md">
-  <button mat-button style="color: white; background-color: #5990f7;" (click)="ngOnInit()">
-    <mat-icon>search</mat-icon>
-  </button> 
-</div>
     
-
-    <div class="col-sm-12 col-md-3">
+    <div class="col-sm-12 col-md-2">
       <!-- Filter -->
       <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+        <input matInput [(ngModel)]="searchBy" placeholder="Filtro">
       </mat-form-field>
 
     </div>
-  </div>
 
-    <!-- <button mat-stroked-button color="primary">Arquivar</button>
-    <button mat-stroked-button color="accent">Apagar</button> -->
+    <div class="col-md-2">
+      <button mat-button style="color: white; background-color: #5990f7;" (click)="ngOnInit()">
+        <mat-icon>search</mat-icon>
+      </button> 
+    </div>
+  </div>
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
-
-      <!-- Checkbox Column
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
-          </mat-checkbox>
-        </td>
-      </ng-container> -->
 
       <!-- Visualizar Column -->
       <ng-container matColumnDef="visualize">
