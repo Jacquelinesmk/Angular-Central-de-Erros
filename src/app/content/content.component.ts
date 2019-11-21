@@ -23,12 +23,12 @@ export interface ResponseBody{
 }
 
 /** Constants used to fill up our data base. */
-const EVENTOS: string[] = [
-  '1000', '300', '100', '11', '2'
-];
-const LEVELS: string[] = [
-  'error', 'warning', 'debug', 'warning', 'error'
-];
+// const EVENTOS: string[] = [
+//   '1000', '300', '100', '11', '2'
+// ];
+// const LEVELS: string[] = [
+//   'error', 'warning', 'debug', 'warning', 'error'
+// ];
 
 const DELETED: string = 'deletado';
 const ARCHIVED: string = 'arquivado';
@@ -50,8 +50,11 @@ const ARCHIVED: string = 'arquivado';
 })
 export class ContentComponent implements OnInit {
   // ----- Select Forms -----
-  selectedAmb = 'producao';
-  ELEMENT_DATA;
+  selectedEnvironment = 'producao';
+  selectedSearchBy;
+  selectedOrderBy;
+
+  //ELEMENT_DATA;
 
   // ----- Tabela -----
   displayedColumns: string[] = [/*'select',*/ 'id', 'level', 'log', 'evento', 'visualize', 'archive', 'delete'];
@@ -79,16 +82,94 @@ export class ContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.logService.getLogs().subscribe(
+    this.search();
+    console.log(this.selectedEnvironment);
+    console.log(this.selectedOrderBy);
+    console.log(this.selectedSearchBy);
+    // this.logService.getLogs().subscribe(
+    //   response=>{
+    //     console.log(response);
+    //     let res = response;
+    //     this.fillTable(res);
+        
+
+    //   }
+    // );
+  }
+
+  search(){
+    if(this.selectedOrderBy != null && this.selectedSearchBy != null){
+      if(this.selectedOrderBy == 'evento'){
+        this.logService.findLogByEnvironmentAndSearchByAndOrderByEvent(this.selectedEnvironment, this.selectedSearchBy)
+        .subscribe(
+          response=>{
+            console.log(response);
+            let res = response;
+            this.fillTable(res);
+          }
+        );
+        return;
+      }
+      if(this.selectedOrderBy == 'level'){
+        this.logService.findLogByEnvironmentAndSearchByAndOrderByLevel(this.selectedEnvironment, this.selectedSearchBy)
+        .subscribe(
+          response=>{
+            console.log(response);
+            let res = response;
+            this.fillTable(res);
+          }
+        );
+        return;
+      }
+    }
+
+    if(this.selectedOrderBy == null && this.selectedSearchBy != null){
+        this.logService.findLogByEnvironmentAndSearchBy(this.selectedEnvironment, this.selectedSearchBy)
+        .subscribe(
+          response=>{
+            console.log(response);
+            let res = response;
+            this.fillTable(res);
+          }
+        );
+        return;
+    }
+
+    if(this.selectedOrderBy != null && this.selectedSearchBy == null){
+      if(this.selectedOrderBy == 'evento'){
+        this.logService.findLogByEnvironmentAndOrderByEvent(this.selectedEnvironment, this.selectedOrderBy)
+        .subscribe(
+          response=>{
+            console.log(response);
+            let res = response;
+            this.fillTable(res);
+          }
+        );
+        return;
+      }
+    
+      if(this.selectedOrderBy == 'level'){
+        this.logService.findLogByEnvironmentAndOrderByLevel(this.selectedEnvironment, this.selectedOrderBy)
+        .subscribe(
+          response=>{
+            console.log(response);
+            let res = response;
+            this.fillTable(res);
+          }
+        );
+        return;
+      }
+    }
+
+    this.logService.findLogByEnvironment(this.selectedEnvironment)
+    .subscribe(
       response=>{
         console.log(response);
         let res = response;
-        //console.log(res);
         this.fillTable(res);
-        
-
       }
     );
+    return;
   }
 
   fillTable(res){
@@ -171,16 +252,16 @@ export class ContentComponent implements OnInit {
 }
 
 /** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const level = LEVELS[Math.round(Math.random() * (LEVELS.length - 1))] + ' ' +
-    LEVELS[Math.round(Math.random() * (LEVELS.length - 1))].charAt(0) + '.';
+// function createNewUser(id: number): UserData {
+//   const level = LEVELS[Math.round(Math.random() * (LEVELS.length - 1))] + ' ' +
+//     LEVELS[Math.round(Math.random() * (LEVELS.length - 1))].charAt(0) + '.';
 
-  return {
-    id: id.toString(),
-    level: level,
-    log: Math.round(Math.random() * 100).toString(),
-    evento: EVENTOS[Math.round(Math.random() * (EVENTOS.length - 1))]
-  };
+//   return {
+//     id: id.toString(),
+//     level: level,
+//     log: Math.round(Math.random() * 100).toString(),
+//     evento: EVENTOS[Math.round(Math.random() * (EVENTOS.length - 1))]
+//   };
 
   
-}
+// }
