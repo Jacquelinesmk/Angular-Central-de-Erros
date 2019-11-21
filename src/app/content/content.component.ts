@@ -22,26 +22,8 @@ export interface ResponseBody{
   coletadoToken: string;
 }
 
-/** Constants used to fill up our data base. */
-// const EVENTOS: string[] = [
-//   '1000', '300', '100', '11', '2'
-// ];
-// const LEVELS: string[] = [
-//   'error', 'warning', 'debug', 'warning', 'error'
-// ];
-
 const DELETED: string = 'deletado';
 const ARCHIVED: string = 'arquivado';
-
-
-//const ELEMENT_DATA: UserData[]; = [
- /* {id: '1', level: 'error', log: "Descrição do log", evento: '1000'},
-  {id: '2', level: 'warning', log: "Descrição do log", evento: '400'},
-  {id: '3', level: 'debug', log: "Descrição do log", evento: '374'},
-  {id: '4', level: 'debug', log: "Descrição do log", evento: '100'},
-  {id: '5', level: 'error', log: "Descrição do log", evento: '22'},
-  {id: '6', level: 'error', log: "Descrição do log", evento: '11'},
-];*/
 
 @Component({
   selector: 'app-content',
@@ -53,8 +35,6 @@ export class ContentComponent implements OnInit {
   selectedEnvironment = 'producao';
   selectedSearchBy;
   selectedOrderBy;
-
-  //ELEMENT_DATA;
 
   // ----- Tabela -----
   displayedColumns: string[] = [/*'select',*/ 'id', 'level', 'log', 'evento', 'visualize', 'archive', 'delete'];
@@ -69,32 +49,10 @@ export class ContentComponent implements OnInit {
   archived = ARCHIVED;
 
 
-  constructor(private router: Router, private logService: LogService) {
-
-    // Para mockup aqui --------------------------------------------------------------------
-    // Create 100 users
-    //const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-
-
-    // Fim do mockup-------------------------------------------------------------------------
-  }
+  constructor(private router: Router, private logService: LogService) {}
 
   ngOnInit() {
     this.search();
-    console.log(this.selectedEnvironment);
-    console.log(this.selectedOrderBy);
-    console.log(this.selectedSearchBy);
-    // this.logService.getLogs().subscribe(
-    //   response=>{
-    //     console.log(response);
-    //     let res = response;
-    //     this.fillTable(res);
-        
-
-    //   }
-    // );
   }
 
   search(){
@@ -103,7 +61,6 @@ export class ContentComponent implements OnInit {
         this.logService.findLogByEnvironmentAndSearchByAndOrderByEvent(this.selectedEnvironment, this.selectedSearchBy)
         .subscribe(
           response=>{
-            console.log(response);
             let res = response;
             this.fillTable(res);
           }
@@ -114,7 +71,6 @@ export class ContentComponent implements OnInit {
         this.logService.findLogByEnvironmentAndSearchByAndOrderByLevel(this.selectedEnvironment, this.selectedSearchBy)
         .subscribe(
           response=>{
-            console.log(response);
             let res = response;
             this.fillTable(res);
           }
@@ -127,7 +83,6 @@ export class ContentComponent implements OnInit {
         this.logService.findLogByEnvironmentAndSearchBy(this.selectedEnvironment, this.selectedSearchBy)
         .subscribe(
           response=>{
-            console.log(response);
             let res = response;
             this.fillTable(res);
           }
@@ -140,7 +95,6 @@ export class ContentComponent implements OnInit {
         this.logService.findLogByEnvironmentAndOrderByEvent(this.selectedEnvironment, this.selectedOrderBy)
         .subscribe(
           response=>{
-            console.log(response);
             let res = response;
             this.fillTable(res);
           }
@@ -152,7 +106,6 @@ export class ContentComponent implements OnInit {
         this.logService.findLogByEnvironmentAndOrderByLevel(this.selectedEnvironment, this.selectedOrderBy)
         .subscribe(
           response=>{
-            console.log(response);
             let res = response;
             this.fillTable(res);
           }
@@ -164,7 +117,6 @@ export class ContentComponent implements OnInit {
     this.logService.findLogByEnvironment(this.selectedEnvironment)
     .subscribe(
       response=>{
-        console.log(response);
         let res = response;
         this.fillTable(res);
       }
@@ -175,7 +127,6 @@ export class ContentComponent implements OnInit {
   fillTable(res){
     var logFiltered = res.filter(item => this.isActive(item));
 
-    //this.ELEMENT_DATA = res;
     this.dataSource = new MatTableDataSource<UserData>(logFiltered);
 
     this.dataSource.paginator = this.paginator;
@@ -200,10 +151,7 @@ export class ContentComponent implements OnInit {
   }
 
   changeLogStatus(logById, status){
-    console.log(logById.status);
     logById.status = status;
-    console.log(logById.status);
-    console.log(logById);
 
     this.logService.changeStatus(logById.id, logById).subscribe();
     this.ngOnInit();
@@ -251,17 +199,3 @@ export class ContentComponent implements OnInit {
   }
 }
 
-/** Builds and returns a new User. */
-// function createNewUser(id: number): UserData {
-//   const level = LEVELS[Math.round(Math.random() * (LEVELS.length - 1))] + ' ' +
-//     LEVELS[Math.round(Math.random() * (LEVELS.length - 1))].charAt(0) + '.';
-
-//   return {
-//     id: id.toString(),
-//     level: level,
-//     log: Math.round(Math.random() * 100).toString(),
-//     evento: EVENTOS[Math.round(Math.random() * (EVENTOS.length - 1))]
-//   };
-
-  
-// }

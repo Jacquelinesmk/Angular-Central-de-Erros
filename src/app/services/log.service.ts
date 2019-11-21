@@ -30,7 +30,6 @@ export class LogService {
 
   /**GET all logs */
   getLogs(){
-    console.log("GET DOS LOGS");
     return this.http.get(this.logUrl + "/api/logs", this.header);
   }
 

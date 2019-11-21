@@ -12,34 +12,28 @@ export class LoginService {
 
   header = {
     headers: new HttpHeaders()
-      .set('Authorization',  sessionStorage.getItem('token'))
+      .set('Authorization', sessionStorage.getItem('token'))
   }
 
-  constructor(private http: HttpClient, private variableEnvironment : VariableEnvironmentService) { }
+  constructor(private http: HttpClient, private variableEnvironment: VariableEnvironmentService) { }
 
-  login(username, password){
+  login(username, password) {
     let body = {
       "login": username,
       "password": password
     }
-    return this.http.post<any>( this.url + '/api/auth/login', body).pipe(
+    return this.http.post<any>(this.url + '/api/auth/login', body).pipe(
       map(
         userData => {
-          console.log("userData");
-          console.log(userData);
+          sessionStorage.setItem('username', userData.user.login);
+          sessionStorage.setItem('userToken', userData.user.token);
 
-         sessionStorage.setItem('username', userData.user.login);
-         sessionStorage.setItem('userToken', userData.user.token);
-
-         let tokenStr= 'Bearer ' + userData.jwtAuthenticationResponse.accessToken;
-         sessionStorage.setItem('token', tokenStr);
-         return userData;
+          let tokenStr = 'Bearer ' + userData.jwtAuthenticationResponse.accessToken;
+          sessionStorage.setItem('token', tokenStr);
+          return userData;
         }
       )
- 
-     );
-     
-    //return this.http.post<any>(this.url + '/api/auth/login', body);
+    );
   }
 
   logOut() {
@@ -49,8 +43,8 @@ export class LoginService {
     sessionStorage.removeItem('logId');
   }
 
-  isLoggedIn(){
-    if(sessionStorage.getItem('username')){
+  isLoggedIn() {
+    if (sessionStorage.getItem('username')) {
       return true;
     }
     return false;

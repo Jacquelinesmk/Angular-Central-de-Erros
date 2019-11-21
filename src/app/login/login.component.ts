@@ -53,38 +53,16 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    //this.getCadastro = JSON.parse(localStorage.getItem('cadastro'));
-    //console.log("this.getCadastro");
-    //console.log(this.getCadastro);
-    //const emailPersistido = this.getCadastro['email'];
-    //console.log("emailPersistido");
-    //console.log(typeof(emailPersistido));
     const emailDigitado = this.formLogin.get('login').value;
     const passwordDigitado = this.formLogin.get('password').value;
 
-    console.log("emailDigitado");
-    console.log(emailDigitado);
-    console.log(typeof(emailDigitado));
-    console.log(passwordDigitado);
-    console.log(typeof(passwordDigitado));
-
     this.loginService.login(emailDigitado, passwordDigitado)
       .subscribe(response => {
-        console.log(response);
         this.router.navigate(['/home'])
       },
       Error => {
         this.isFailedLogin = true;
-        console.log("Error");
-        console.log(Error);
       });
-
-    //if (emailPersistido == emailDigitado) {
-    //  console.log("São iguais");
-    //  this.router.navigate(['/user-home']);
-    //} else {
-    //  this.openDialog();
-    //}
   }
 
   openDialog() {
